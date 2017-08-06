@@ -1,2 +1,2 @@
-# docker-php-stack
+# phpenv
 Dockerized PHP, NGINX, MySQL based stack
