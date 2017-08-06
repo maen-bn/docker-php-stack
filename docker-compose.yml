@@ -1,0 +1,16 @@
+version: '3.1'
+services:
+  fpm:
+    build:
+      context: ./fpm
+    expose:
+      - 9000
+    volumes:
+      - ./:/app/
+  nginx:
+    build:
+      context: ./nginx
+    ports:
+      - 80:80
+    links:
+      - fpm
