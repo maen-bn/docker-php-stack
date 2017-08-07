@@ -1,3 +1,4 @@
 .idea/
 data/mysql
 data/redis
+data/beanstalkd

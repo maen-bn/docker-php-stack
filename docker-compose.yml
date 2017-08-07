@@ -7,6 +7,7 @@ services:
     links:
       - mysql
       - redis
+      - beanstalkd
   composer:
     build:
       context: ./composer
@@ -27,6 +28,7 @@ services:
     links:
       - mysql
       - redis
+      - beanstalkd
   nginx:
     build:
       context: ./nginx
@@ -52,3 +54,8 @@ services:
     image: redis:alpine
     volumes:
       - ./data/redis/:/data
+  beanstalkd:
+    build:
+      context: ./beanstalkd
+    volumes:
+      - ./data/beanstalkd/:/data
