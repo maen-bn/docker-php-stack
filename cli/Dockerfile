@@ -14,6 +14,7 @@ RUN apk --no-cache add \
         php7-mysqlnd \
         php7-openssl \
         php7-pdo \
+        php7-pdo_mysql \
         php7-pdo_sqlite \
         php7-pdo_dblib \
         php7-pear \

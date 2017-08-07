@@ -4,6 +4,8 @@ services:
     build:
       context: ./cli
     image: phpenv/cli:latest
+    links:
+      - mysql
   composer:
     build:
       context: ./composer
@@ -21,6 +23,8 @@ services:
       - ./:/app/
     depends_on:
       - cli
+    links:
+      - mysql
   nginx:
     build:
       context: ./nginx
@@ -28,3 +32,17 @@ services:
       - 80:80
     links:
       - fpm
+  mysql:
+    restart: always
+    build:
+      context: ./mysql
+    ports:
+      - 33061:3306
+    volumes:
+      - ./data/:/app/
+      - /etc/passwd:/etc/passwd:ro
+      - /etc/group:/etc/group:ro
+    environment:
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}

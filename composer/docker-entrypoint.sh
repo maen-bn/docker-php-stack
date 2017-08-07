@@ -55,6 +55,8 @@ elif [ "$1" = 'composer' ]; then
 # check if the first argument passed in matches a known command
 elif isCommand "$1"; then
   set -- /sbin/tini -- composer "$@"
+elif ["$@" == '']; then
+  set -- /sbin/tini -- composer --version
 fi
 
 exec "$@"
