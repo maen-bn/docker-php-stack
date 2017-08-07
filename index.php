@@ -15,3 +15,4 @@ catch (PDOException $exception){
 }
 $get = $db->query('SELECT DATABASE();')->fetchAll();
 var_dump($get);
+echo phpinfo();

@@ -16,7 +16,9 @@ RUN curl -s -f -L -o /tmp/installer.php https://raw.githubusercontent.com/compos
     }" \
  && php /tmp/installer.php --no-ansi --install-dir=/usr/bin --filename=composer --version=${COMPOSER_VERSION} \
  && rm /tmp/installer.php \
- && composer --ansi --version --no-interaction
+ && composer --ansi --version --no-interaction \
+ && apk del php7-xdebug \
+ && rm /etc/php7/conf.d/xdebug.ini
 
 COPY docker-entrypoint.sh /docker-entrypoint.sh
 

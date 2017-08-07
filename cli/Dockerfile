@@ -32,6 +32,7 @@ RUN apk --no-cache add \
         php7-zlib
 
 
+COPY xdebug.ini /etc/php7/conf.d/xdebug.ini
 
 COPY docker-entrypoint.sh /docker-entrypoint.sh
 
