@@ -6,6 +6,7 @@ services:
     image: phpenv/cli:latest
     links:
       - mysql
+      - redis
   composer:
     build:
       context: ./composer
@@ -25,6 +26,7 @@ services:
       - cli
     links:
       - mysql
+      - redis
   nginx:
     build:
       context: ./nginx
@@ -46,3 +48,7 @@ services:
       - MYSQL_DATABASE=${MYSQL_DATABASE}
       - MYSQL_USER=${MYSQL_USER}
       - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+  redis:
+    image: redis:alpine
+    volumes:
+      - ./data/redis/:/data
