@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 tty=
     tty -s && tty=--tty
     docker run \
