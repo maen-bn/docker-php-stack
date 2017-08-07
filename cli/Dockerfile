@@ -29,6 +29,14 @@ RUN apk --no-cache add \
         php7-xmlwriter \
         php7-zlib
 
-ENTRYPOINT ["entrypoint"]
+
+
+COPY docker-entrypoint.sh /docker-entrypoint.sh
+
+RUN ["chmod", "+x", "/docker-entrypoint.sh"]
+
+WORKDIR /app
+
+ENTRYPOINT ["/docker-entrypoint.sh"]
 
 CMD ["php", "-a"]
