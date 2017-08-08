@@ -59,3 +59,11 @@ services:
       context: ./beanstalkd
     volumes:
       - ./data/beanstalkd/:/data
+  node:
+    image: node:6-alpine
+    environment:
+      - NODE_ENV=${NODE_ENV}
+    volumes:
+      - ./:/usr/src/app
+    expose:
+      - 8080
