@@ -1,12 +1,12 @@
 # elephant-whale
-## Dockerized PHP, NGINX, MySQL based environment
+## Dockerized PHP, NGINX, MariaDB based environment
 
 ### What is provided
 
 * PHP (7.1)
   - FPM & CLI
 * NGINX
-* MySQL
+* MariaDB 10.1
 * Redis
 * Beanstalkd
 * Composer
