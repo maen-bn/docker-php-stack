@@ -22,7 +22,7 @@ services:
     expose:
       - 9000
     volumes:
-      - ./:/app/
+      - ${HOST_PATH_TO_APP}/:/app/
     depends_on:
       - cli
     links:
@@ -43,7 +43,7 @@ services:
     ports:
       - 33061:3306
     volumes:
-      - ./data/mysql/:/app/
+      - ${HOST_PATH_TO_APP}/data/mysql/:/app/
       - /etc/passwd:/etc/passwd:ro
       - /etc/group:/etc/group:ro
     environment:
@@ -53,17 +53,17 @@ services:
   redis:
     image: redis:alpine
     volumes:
-      - ./data/redis/:/data
+      - ${HOST_PATH_TO_APP}/data/redis/:/data
   beanstalkd:
     build:
       context: ./beanstalkd
     volumes:
-      - ./data/beanstalkd/:/data
+      - ${HOST_PATH_TO_APP}/data/beanstalkd/:/data
   node:
     image: node:6-alpine
     environment:
       - NODE_ENV=${NODE_ENV}
     volumes:
-      - ./:/usr/src/app
+      - ${HOST_PATH_TO_APP}/:/usr/src/app
     expose:
       - 8080
