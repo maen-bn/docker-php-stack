@@ -22,10 +22,11 @@ The helper shell scripts require having bash. This is available with most OSs e.
 
 ### Setup
 
-Run the following within the root of the directory
+Run the setup script and then bring up the containers e.g.
 
 ```bash
-$ docker-compose up --build -d
+$ ./setup.sh
+$ docker-compose up -d
 ```
 
 ### Helper scripts
