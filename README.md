@@ -1,2 +1,2 @@
-# phpenv
-Dockerized PHP, NGINX, MySQL based stack
+# elephant-whale
+### Dockerized PHP, NGINX, MySQL based environment
