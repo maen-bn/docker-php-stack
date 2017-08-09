@@ -3,7 +3,8 @@ services:
   cli:
     build:
       context: ./cli
-    image: phpenv/cli:latest
+      dockerfile: Dockerfile${PHP_VERSION}
+    image: elephant-whale-php/cli:${PHP_IMAGE_TAG}
     links:
       - mysql
       - redis
@@ -11,14 +12,16 @@ services:
   composer:
     build:
       context: ./composer
+      dockerfile: Dockerfile${PHP_VERSION}
       args:
         - COMPOSER_VERSION=${COMPOSER_VERSION}
     depends_on:
       - cli
-    image: phpenv/composer:latest
+    image: elephant-whale-php/composer:${PHP_IMAGE_TAG}
   fpm:
     build:
       context: ./fpm
+      dockerfile: Dockerfile${PHP_VERSION}
     expose:
       - 9000
     volumes:
