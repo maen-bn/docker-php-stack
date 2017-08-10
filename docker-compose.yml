@@ -41,6 +41,7 @@ services:
       - fpm
   mysql:
     restart: always
+    container_name: elephantwhale_mysql
     build:
       context: ./mysql
       dockerfile: Dockerfile${MYSQL_VERSION}
@@ -70,3 +71,4 @@ services:
       - ${HOST_PATH_TO_APP}/:/usr/src/app
     expose:
       - 8080
+
