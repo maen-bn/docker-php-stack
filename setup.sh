@@ -34,7 +34,6 @@ then
         case $environment in
             "production"|"staging"|"testing"|"development")
             replace_env_variable "APP_ENV" $environment .env;
-            replace_env_variable "NODE_ENV" $environment .env;
             break;;
             * ) echo "Invalid selection. EXITING"; rm ./.env; exit;;
         esac
