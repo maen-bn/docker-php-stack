@@ -3,10 +3,10 @@
 
 ### What is provided
 
-* PHP (7.1)
+* PHP (7.1 & 5.6)
   - FPM & CLI
 * NGINX
-* MariaDB 10.1
+* MariaDB 10.1 or MySQL 5.7
 * Redis
 * Beanstalkd
 * Composer

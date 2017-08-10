@@ -43,16 +43,16 @@ services:
     restart: always
     build:
       context: ./mysql
+      dockerfile: Dockerfile${MYSQL_VERSION}
     ports:
       - 33061:3306
     volumes:
-      - ${HOST_PATH_TO_APP}/data/mysql/:/app/
-      - /etc/passwd:/etc/passwd:ro
-      - /etc/group:/etc/group:ro
+      - ${HOST_PATH_TO_APP}/data/mysql${MYSQL_VERSION}/:/app/
     environment:
       - MYSQL_DATABASE=${MYSQL_DATABASE}
       - MYSQL_USER=${MYSQL_USER}
       - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
   redis:
     image: redis:alpine
     volumes:

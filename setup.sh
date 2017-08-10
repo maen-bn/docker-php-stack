@@ -30,18 +30,34 @@ then
         esac
     done
 
+     # Get the PHP version the user wants
+    echo "Select a MySQL/Maria DB version"
+    select php_version in "Maria DB 10.1" "MySQL 5.7";
+    do
+        case $php_version in
+            "Maria DB 10.1") break;;
+            "MySQL 5.7")
+                replace_env_variable "MYSQL_VERSION" "57" .env;
+                break;;
+            * ) echo "Invalid selection. EXITING"; rm ./.env; exit;;
+        esac
+    done
+
     # Get the name the user wants for the MySQL DB name
     read -p "What should your MySQL DB be called? " mysql_db_name
     replace_env_variable "MYSQL_DATABASE" $mysql_db_name
 
     # Get the name the user wants for the MySQL DB name
-    read -p "What should your MySQL user be called? " mysql_db_user
-    replace_env_variable "MYSQL_USER" $mysql_db_user
+    read -p "What should your MySQL user be called? " mysql_user
+    replace_env_variable "MYSQL_USER" $mysql_user
 
     # Get the name the user wants for the MySQL DB name
-    read -p "What should the password be for the MySQL user '${mysql_db_user}'? " mysql_db_password
-    sed -i "s~^MYSQL_PASSWORD=.*$~MYSQL_PASSWORD=${mysql_db_password}~" .env
-    replace_env_variable "MYSQL_PASSWORD" $mysql_db_password
+    read -p "What should the password be for the MySQL user '${mysql_user}'? " mysql_password
+    replace_env_variable "MYSQL_PASSWORD" $mysql_password
+
+    # Get the name the user wants for the MySQL DB name
+    read -p "What should the password be for the MySQL root user? " mysql_root_password
+    replace_env_variable "MYSQL_ROOT_PASSWORD" $mysql_root_password
 
     echo "Select a node environment?"
     select node_environment in "production" "staging" "testing" "development";

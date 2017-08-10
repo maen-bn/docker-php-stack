@@ -43,9 +43,9 @@ EOF
     fi
   fi
 
-  /usr/bin/mysqld --user=root --bootstrap --verbose=0 < $tfile
+  mysqld --user=root --bootstrap --verbose=0 < $tfile
   rm -f $tfile
 fi
 
 
-exec /usr/bin/mysqld --user=root --console
+exec mysqld --user=root --console
