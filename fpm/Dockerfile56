@@ -1,0 +1,17 @@
+FROM elephant-whale-php/cli:56
+
+RUN apk --no-cache add php5-fpm supervisor && \
+    apk del php5-xdebug && \
+    rm /etc/php5/conf.d/xdebug.ini && \
+    mkdir /var/log/supervisor
+
+COPY ./php-fpm.conf /etc/php5/php-fpm.conf
+COPY supervisord56.conf /etc/supervisord.conf
+
+EXPOSE 9000
+
+COPY docker-entrypoint.sh /docker-entrypoint.sh
+
+RUN ["chmod", "+x", "/docker-entrypoint.sh"]
+
+ENTRYPOINT ["/docker-entrypoint.sh"]

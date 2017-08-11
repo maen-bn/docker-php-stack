@@ -3,10 +3,10 @@
 
 ### What is provided
 
-* PHP (7.1)
+* PHP (7.1 & 5.6)
   - FPM & CLI
 * NGINX
-* MariaDB 10.1
+* MariaDB 10.1 or MySQL 5.7
 * Redis
 * Beanstalkd
 * Composer
@@ -22,10 +22,11 @@ The helper shell scripts require having bash. This is available with most OSs e.
 
 ### Setup
 
-Run the following within the root of the directory
+Run the setup script and then bring up the containers e.g.
 
 ```bash
-$ docker-compose up --build -d
+$ ./setup.sh
+$ docker-compose up -d
 ```
 
 ### Helper scripts
@@ -38,3 +39,4 @@ $ ./composer.sh update
 $ ./yarn.sh add vue --save
 ```
 
+You can also add these scripts contents to your .bashrc file so it can be used globally

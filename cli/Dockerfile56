@@ -1,0 +1,37 @@
+FROM alpine:3.5
+
+RUN apk --no-cache add \
+        curl git openssh openssl bash tini  \
+        php5 \
+        php5-ctype \
+        php5-curl \
+        php5-dom \
+        php5-ftp \
+        php5-iconv \
+        php5-json \
+        php5-openssl \
+        php5-opcache \
+        php5-pdo \
+        php5-pdo_mysql \
+        php5-pdo_sqlite \
+        php5-pdo_dblib \
+        php5-pear \
+        php5-phar \
+        php5-posix \
+        php5-sqlite3 \
+        php5-xml \
+        php5-xdebug \
+        php5-xmlreader \
+        php5-zlib
+
+COPY xdebug.ini /etc/php5/conf.d/xdebug.ini
+
+COPY docker-entrypoint.sh /docker-entrypoint.sh
+
+RUN ["chmod", "+x", "/docker-entrypoint.sh"]
+
+WORKDIR /app
+
+ENTRYPOINT ["/docker-entrypoint.sh"]
+
+CMD ["php", "-a"]

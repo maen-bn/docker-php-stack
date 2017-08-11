@@ -1,4 +1,4 @@
-FROM phpenv/cli:latest
+FROM elephant-whale-php/cli:latest
 
 RUN apk --no-cache add php7-fpm supervisor && \
     apk del php7-xdebug && \

@@ -3,7 +3,8 @@ services:
   cli:
     build:
       context: ./cli
-    image: phpenv/cli:latest
+      dockerfile: Dockerfile${PHP_VERSION}
+    image: elephant-whale-php/cli:${PHP_IMAGE_TAG}
     links:
       - mysql
       - redis
@@ -11,18 +12,20 @@ services:
   composer:
     build:
       context: ./composer
+      dockerfile: Dockerfile${PHP_VERSION}
       args:
         - COMPOSER_VERSION=${COMPOSER_VERSION}
     depends_on:
       - cli
-    image: phpenv/composer:latest
+    image: elephant-whale-php/composer:${PHP_IMAGE_TAG}
   fpm:
     build:
       context: ./fpm
+      dockerfile: Dockerfile${PHP_VERSION}
     expose:
       - 9000
     volumes:
-      - ./:/app/
+      - ${HOST_PATH_TO_APP}/:/app/
     depends_on:
       - cli
     links:
@@ -30,40 +33,43 @@ services:
       - redis
       - beanstalkd
   nginx:
+    hostname: ${APP_HOST_NAME}
     build:
       context: ./nginx
     ports:
-      - 80:80
+      - ${APP_HOST_PORT}:80
     links:
       - fpm
   mysql:
     restart: always
+    container_name: elephantwhale_mysql
     build:
       context: ./mysql
+      dockerfile: Dockerfile${MYSQL_VERSION}
     ports:
       - 33061:3306
     volumes:
-      - ./data/mysql/:/app/
-      - /etc/passwd:/etc/passwd:ro
-      - /etc/group:/etc/group:ro
+      - ${HOST_PATH_TO_APP}/data/mysql${MYSQL_VERSION}/:/app/
     environment:
       - MYSQL_DATABASE=${MYSQL_DATABASE}
       - MYSQL_USER=${MYSQL_USER}
       - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
   redis:
     image: redis:alpine
     volumes:
-      - ./data/redis/:/data
+      - ${HOST_PATH_TO_APP}/data/redis/:/data
   beanstalkd:
     build:
       context: ./beanstalkd
     volumes:
-      - ./data/beanstalkd/:/data
+      - ${HOST_PATH_TO_APP}/data/beanstalkd/:/data
   node:
     image: node:6-alpine
     environment:
-      - NODE_ENV=${NODE_ENV}
+      - NODE_ENV=${APP_ENV}
     volumes:
-      - ./:/usr/src/app
+      - ${HOST_PATH_TO_APP}/:/usr/src/app
     expose:
       - 8080
+

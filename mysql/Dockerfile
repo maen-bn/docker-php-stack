@@ -3,6 +3,8 @@ FROM alpine:latest
 WORKDIR /app
 VOLUME /app
 
+RUN mkdir /docker-entrypoint-initdb.d
+
 RUN apk add --update mysql mysql-client && rm -f /var/cache/apk/*
 COPY my.cnf /etc/mysql/my.cnf
 
