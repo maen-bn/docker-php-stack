@@ -10,12 +10,10 @@ replace_env_variable(){
 echo -e "$(tput bold)$(tput setab 4)                                   $(tput sgr0)"
 echo -e "$(tput bold)$(tput setab 4)     Welcome to elephant-whale     $(tput sgr0)"
 echo -e "$(tput bold)$(tput setab 4)                                   $(tput sgr0)"
-#echo -e "$(tput bold)Welcome to elephant-whale$(tput sgr0)"
 
-#read -p "$(tput bold)$(tput setaf 3)HELLO TEST$(tput sgr0)" test
+#docker exec elephantwhale_mysql sh -c 'exec mysqldump --all-databases -uroot -p"$MYSQL_ROOT_PASSWORD"' > gzip -dc < /home/ben/PhpStormProjects/test/people.sql.gz
 
-
-if [ ! -f ./.env ] || [ $1 == "fresh" ]
+if [ ! -f ./.env ] || [ "$1" == "fresh" ]
 then
 
     if [ ! -f ./.env ]; then
@@ -48,11 +46,6 @@ then
             * ) echo "Invalid selection. EXITING"; rm ./.env; exit;;
         esac
     done
-    if [ $environment != "production" ]
-        then
-            cp ./docker-compose.dev.yml ./docker-compose.override.yml
-    fi
-    printf '\n'
 
     # Get the PHP version the user wants
     echo "$(tput bold)$(tput setaf 3)Select a PHP version:$(tput sgr0) "
@@ -108,10 +101,45 @@ then
         read -p "$(tput bold)$(tput setaf 3)What should the password be for the MySQL root user?$(tput sgr0) " mysql_root_password
         replace_env_variable "MYSQL_ROOT_PASSWORD" $mysql_root_password
         printf '\n'
+
+         # See if the user has additional scripts they want to run on the DB container
+        echo "$(tput bold)$(tput setaf 3)Would you like to execute additional files for the DB when it runs a fresh initialisation (will only run .sh, .sql, or .sql.gz):$(tput sgr0) "
+        select has_additional_db_scripts in "Yes" "No";
+        do
+            case $has_additional_db_scripts in
+                "No")break;;
+                "Yes")
+                    # Get the name the user wants for the MySQL DB name
+                    read -p "$(tput bold)$(tput setaf 3)Specify the host path to your DB scripts?$(tput sgr0) " host_path_db_script
+                    host_path_db_script=$(dirname $(readlink -e ${host_path_db_script}))/$(basename ${host_path_db_script})
+
+                    printf '\n'
+                    echo "$(tput bold)$(tput setaf 2)Your db scripts directory is:${host_path_db_script}$(tput sgr0) "
+                    printf '\n'
+                    replace_env_variable "HOST_PATH_DB_SCRIPT" $host_path_db_script
+                    printf '\n'
+                    break;;
+                * ) echo "Invalid selection. EXITING"; rm ./.env; exit;;
+            esac
+        done
+
+        # Create the appropriate override script
+        if [ $environment != "production" ]
+        then
+            cp ./docker-compose.dev.yml ./docker-compose.override.yml
+        fi
+        if [ $environment != "production" ] && [ $has_additional_db_scripts == "Yes" ]
+        then
+            cp ./docker-compose.db.override.dev.yml ./docker-compose.override.yml
+        fi
+        if [ $environment == "production" ] && [ $has_additional_db_scripts == "Yes" ]
+        then
+            cp ./docker-compose.db.override.prod.yml ./docker-compose.override.yml
+        fi
     fi
 fi
 
-
 echo "$(tput bold)$(tput setaf 2)Building images ... $(tput sgr0)"
 docker-compose build
+printf '\n'
 echo "$(tput bold)$(tput setaf 2)Images are all built. Now run 'docker-compose up -d' to bring up your containers $(tput sgr0)"
