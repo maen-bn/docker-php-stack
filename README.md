@@ -1,5 +1,5 @@
 # elephant-whale
-## Dockerized PHP, NGINX, MariaDB based environment
+## A tool to help Dockerize your PHP, NGINX, MariaDB based application
 
 ### What is provided
 
