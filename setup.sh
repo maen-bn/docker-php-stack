@@ -7,9 +7,16 @@ get_env_variable(){
 replace_env_variable(){
     sed -i "s~^${1}=.*$~${1}=${2}~" .env
 }
-echo -e "$(tput bold)$(tput setab 4)                                   $(tput sgr0)"
-echo -e "$(tput bold)$(tput setab 4)     Welcome to elephant-whale     $(tput sgr0)"
-echo -e "$(tput bold)$(tput setab 4)                                   $(tput sgr0)"
+
+printf '\n'
+
+echo -e "$(tput bold)$(tput setab 4)                                    $(tput sgr0)"
+echo -e "$(tput bold)$(tput setab 4)                                    $(tput sgr0)"
+echo -e "$(tput bold)$(tput setab 4)     Welcome to elephant-whale      $(tput sgr0)"
+echo -e "$(tput bold)$(tput setab 4)  Lets put your PHP app in docker!  $(tput sgr0)"
+echo -e "$(tput bold)$(tput setab 4)                                    $(tput sgr0)"
+echo -e "$(tput bold)$(tput setab 4)                                    $(tput sgr0)"
+printf '\n'
 
 #docker exec elephantwhale_mysql sh -c 'exec mysqldump --all-databases -uroot -p"$MYSQL_ROOT_PASSWORD"' > gzip -dc < /home/ben/PhpStormProjects/test/people.sql.gz
 
