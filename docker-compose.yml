@@ -33,10 +33,11 @@ services:
       - redis
       - beanstalkd
   nginx:
+    hostname: ${APP_HOST_NAME}
     build:
       context: ./nginx
     ports:
-      - 80:80
+      - ${APP_HOST_PORT}:80
     links:
       - fpm
   mysql:

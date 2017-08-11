@@ -34,8 +34,17 @@ then
     printf '\n'
     replace_env_variable "HOST_PATH_TO_APP" $host_path_app
 
-    # Let user specify where this is being ran
+    # What port should be mapped to host for app
+    read -e -p "What should you app host name be called (remember to edit your host file)? " host_app_name
+    replace_env_variable "APP_HOST_NAME" $host_app_name
+    printf '\n'
 
+    # What port should be mapped to host for app
+    read -e -p "What port should be used on your host for the app? " -i "80" host_app_port
+    replace_env_variable "APP_HOST_PORT" $host_app_port
+    printf '\n'
+
+    # Let user specify where this is being ran
     echo "$(tput bold)$(tput setaf 3)What sort of environment are running this in?$(tput sgr0) "
     select environment in "production" "staging" "testing" "development";
     do
@@ -143,3 +152,9 @@ echo "$(tput bold)$(tput setaf 2)Building images ... $(tput sgr0)"
 docker-compose build
 printf '\n'
 echo "$(tput bold)$(tput setaf 2)Images are all built. Now run 'docker-compose up -d' to bring up your containers $(tput sgr0)"
+echo "$(tput bold)$(tput setaf 2)Then open http://localhost:$(get_env_variable "APP_HOST_PORT") to view your app$(tput sgr0)"
+echo "$(tput bold)$(tput setaf 2)You can also use http://$(get_env_variable "APP_HOST_NAME"):$(get_env_variable "APP_HOST_PORT") if you've edited your host file to reflect this$(tput sgr0)"
+
+if [ "$environment" != "production" ]; then
+    echo "$(tput bold)$(tput setaf 2)You'll also be able to administer your DB from http://localhost:8091$(tput sgr0)"
+fi
