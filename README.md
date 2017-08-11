@@ -22,7 +22,9 @@ The helper shell scripts require having bash. This is available with most OSs e.
 
 ### Setup
 
-Run the setup script and then bring up the containers e.g.
+First grab and extract the latest [release](https://github.com/maen-bn/elephant-whale/releases).
+
+The run the setup script and then bring up the containers e.g.
 
 ```bash
 $ ./setup.sh
