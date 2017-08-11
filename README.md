@@ -39,3 +39,4 @@ $ ./composer.sh update
 $ ./yarn.sh add vue --save
 ```
 
+You can also add these scripts contents to your .bashrc file so it can be used globally
